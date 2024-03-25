@@ -15,9 +15,9 @@ import { orgPlugin } from '@backstage/plugin-org';
 import { SearchPage } from '@backstage/plugin-search';
 import { TechRadarPage } from '@backstage/plugin-tech-radar';
 import {
-  TechDocsIndexPage,
-  techdocsPlugin,
-  TechDocsReaderPage,
+    TechDocsIndexPage,
+    techdocsPlugin,
+    TechDocsReaderPage,
 } from '@backstage/plugin-techdocs';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
@@ -27,15 +27,32 @@ import { entityPage } from './components/catalog/EntityPage';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
 
-import { AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
+import {AlertDisplay, OAuthRequestDialog, SignInPage, SignInProviderConfig} from '@backstage/core-components';
 import { createApp } from '@backstage/app-defaults';
 import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
 import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
+import {microsoftAuthApiRef} from "@backstage/core-plugin-api";
+
+const microsoftAuthProvider: SignInProviderConfig = {
+    id: 'azure-auth-provider',
+    title: 'Microsoft Active Directory',
+    message: 'Sign in to Backstage Application using your Active Directory account.',
+    apiRef: microsoftAuthApiRef,
+};
 
 const app = createApp({
   apis,
+  components: {
+      SignInPage: props => (
+          <SignInPage
+              {...props}
+              auto
+              provider={microsoftAuthProvider}
+          />
+      ),
+  },
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
