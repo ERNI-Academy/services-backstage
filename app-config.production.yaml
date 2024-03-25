@@ -1,11 +1,15 @@
 app:
-  # Should be the same as backend.baseUrl when using the `app-backend` plugin.
-  baseUrl: http://localhost:7007
+  baseUrl: https://${CUSTOM_DOMAIN}
+
+organization:
+  name: ERNI-Academy
 
 backend:
   baseUrl: https://${CUSTOM_DOMAIN}
   listen:
     port: 80
+  cors:
+    origin: https://${CUSTOM_DOMAIN}
   database:
     client: pg
     connection:
@@ -14,8 +18,30 @@ backend:
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
       ssl: true
-  cors:
-    origin: https://${CUSTOM_DOMAIN}
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+auth:
+  environment: production
+  providers:
+    microsoft:
+      production:
+        clientId: ${AZURE_CLIENT_ID}
+        clientSecret: ${AZURE_CLIENT_SECRET}
+        tenantId: ${AZURE_TENANT_ID}
+        domainHint: ${AZURE_TENANT_ID}
+        additionalScopes:
+          - Mail.Send
+    github:
+      production:
+        clientId: ${GITHUB_ORG_OATH_CLIENT_ID}
+        clientSecret: ${GITHUB_ORG_OATH_CLIENT_SECRET}
+      development:
+        clientId: ${GITHUB_ORG_OATH_CLIENT_ID}
+        clientSecret: ${GITHUB_ORG_OATH_CLIENT_SECRET}
 
 techdocs:
   builder: 'external'
@@ -25,9 +51,3 @@ techdocs:
       containerName: ${TECHDOCS_CONTAINER_NAME}
       credentials:
         accountName: ${TECHDOCS_STORAGE_ACCOUNT}
-
-#catalog:
-#  # Overrides the default list locations from app-config.yaml as these contain example data.
-#  # See https://backstage.io/docs/features/software-catalog/#adding-components-to-the-catalog for more details
-#  # on how to get entities into the catalog.
-#  locations: []
