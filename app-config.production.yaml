@@ -17,6 +17,15 @@ backend:
   cors:
     origin: https://${CUSTOM_DOMAIN}
 
+techdocs:
+  builder: 'external'
+  publisher:
+    type: 'azureBlobStorage'
+    azureBlobStorage:
+      containerName: ${TECHDOCS_CONTAINER_NAME}
+      credentials:
+        accountName: ${TECHDOCS_STORAGE_ACCOUNT}
+
 #catalog:
 #  # Overrides the default list locations from app-config.yaml as these contain example data.
 #  # See https://backstage.io/docs/features/software-catalog/#adding-components-to-the-catalog for more details
