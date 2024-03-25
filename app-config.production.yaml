@@ -37,11 +37,8 @@ auth:
           - Mail.Send
     github:
       production:
-        clientId: ${GITHUB_ORG_OATH_CLIENT_ID}
-        clientSecret: ${GITHUB_ORG_OATH_CLIENT_SECRET}
-      development:
-        clientId: ${GITHUB_ORG_OATH_CLIENT_ID}
-        clientSecret: ${GITHUB_ORG_OATH_CLIENT_SECRET}
+        clientId: ${APP_CLIENT_ID}
+        clientSecret: ${APP_CLIENT_SECRET}
 
 techdocs:
   builder: 'external'
