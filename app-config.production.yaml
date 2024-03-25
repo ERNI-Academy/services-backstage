@@ -3,17 +3,9 @@ app:
   baseUrl: http://localhost:7007
 
 backend:
-  # Note that the baseUrl should be the URL that the browser and other clients
-  # should use when communicating with the backend, i.e. it needs to be
-  # reachable not just from within the backend host, but from all of your
-  # callers. When its value is "http://localhost:7007", it's strictly private
-  # and can't be reached by others.
-  baseUrl: http://localhost:7007
-  # The listener can also be expressed as a single <host>:<port> string. In this case we bind to
-  # all interfaces, the most permissive setting. The right value depends on your specific deployment.
-  listen: ':7007'
-
-  # config options: https://node-postgres.com/api/client
+  baseUrl: https://${CUSTOM_DOMAIN}
+  listen:
+    port: 80
   database:
     client: pg
     connection:
@@ -22,6 +14,8 @@ backend:
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
       ssl: true
+  cors:
+    origin: https://${CUSTOM_DOMAIN}
 
 #catalog:
 #  # Overrides the default list locations from app-config.yaml as these contain example data.
