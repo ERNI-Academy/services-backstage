@@ -61,8 +61,24 @@ techdocs:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
-  # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  environment: production
+  providers:
+    microsoft:
+      production:
+        clientId: ${AZURE_CLIENT_ID}
+        clientSecret: ${AZURE_CLIENT_SECRET}
+        tenantId: ${AZURE_TENANT_ID}
+        domainHint: ${AZURE_TENANT_ID}
+        additionalScopes:
+          - Mail.Send
+    github:
+      production:
+        clientId: ${GITHUB_ORG_OATH_CLIENT_ID}
+        clientSecret: ${GITHUB_ORG_OATH_CLIENT_SECRET}
+        ssl: true
+      development:
+        clientId: ${GITHUB_ORG_OATH_CLIENT_ID}
+        clientSecret: ${GITHUB_ORG_OATH_CLIENT_SECRET}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
